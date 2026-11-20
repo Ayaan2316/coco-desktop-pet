@@ -1,0 +1,13 @@
+# Coco's home: white fur hammock on a crossed plywood stand with "Coco" on it.
+# Rendered from art/coco_cartoon.blend with the same camera scale as the cat sprites.
+back: bed_back.png        # drawn BEHIND Coco
+front: bed_front.png      # drawn IN FRONT of Coco (the fluffy front rim), so she sinks into the hammock
+size:
+- 384
+- 192
+scale_to_cat: 1.0         # same pixels-per-unit as the cat sprites
+bed:                      # where Coco's paw anchor goes when she sleeps (hammock centre)
+- 192
+- 113
+bed_half_width: 80        # half width of the sleeping surface, px
+notes: Replaces the woven basket. Back is drawn behind Coco, front in front of her.
