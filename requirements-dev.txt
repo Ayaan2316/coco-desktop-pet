@@ -1,0 +1,4 @@
+-r requirements.txt
+pytest>=8.0
+ruff>=0.5
+pyinstaller>=6.10            # tools_dev/build_exe.py: Coco.exe

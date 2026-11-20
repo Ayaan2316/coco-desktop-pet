@@ -1,0 +1,43 @@
+# Sprite manifest for Coco. Format: docs/SPRITES.md
+# Final art rendered in Blender (art/coco_cartoon.blend). Frames 256x256, facing LEFT,
+# paws on the anchor. Rendered at 512 px and downscaled for crisp lines.
+
+version: 1
+frame_size: [256, 256]     # default width, height of ONE frame (source pixels)
+anchor: [128, 236]         # default paw contact point inside a frame
+
+animations:
+  # --- idle ------------------------------------------------------------------------------
+  sit:         {frames: 8,  fps: 6,  loop: true}
+  blink:       {frames: 4,  fps: 12, loop: false, next: sit}
+  tail_swish:  {frames: 8,  fps: 10, loop: false, next: sit}
+  loaf:        {frames: 6,  fps: 5,  loop: true}
+  groom:       {frames: 10, fps: 10, loop: true}
+  yawn:        {frames: 8,  fps: 10, loop: false, next: sit}
+  stretch:     {frames: 10, fps: 10, loop: false, next: sit, frame_size: [320, 256], anchor: [160, 236]}
+  look_around: {frames: 10, fps: 8,  loop: false, next: sit}
+  purr:        {frames: 6,  fps: 8,  loop: true}
+  # --- rest ------------------------------------------------------------------------------
+  sleep:       {frames: 6,  fps: 4,  loop: true}
+  wake_up:     {frames: 8,  fps: 10, loop: false, next: sit}
+  # --- move ------------------------------------------------------------------------------
+  walk:        {frames: 8,  fps: 12, loop: true}
+  run:         {frames: 6,  fps: 16, loop: true}
+  jump:        {frames: 6,  fps: 16, loop: false}
+  fall:        {frames: 4,  fps: 10, loop: true}
+  land:        {frames: 4,  fps: 16, loop: false, next: sit}
+  peek:        {frames: 8,  fps: 8,  loop: false}
+  # --- play / handling -------------------------------------------------------------------
+  stalk:       {frames: 6,  fps: 8,  loop: true}
+  pounce:      {frames: 4,  fps: 14, loop: false}
+  dangle:      {frames: 6,  fps: 8,  loop: true, grab: [123, 29]}
+  # --- talking + emotions (mapped in cat.yaml > emotions) -----------------------
+  talk:        {frames: 4,  fps: 10, loop: true}
+  think:       {frames: 6,  fps: 6,  loop: true}
+  happy:       {frames: 6,  fps: 10, loop: true}
+  sad:         {frames: 6,  fps: 5,  loop: true}
+  angry:       {frames: 6,  fps: 10, loop: true}
+  surprised:   {frames: 5,  fps: 12, loop: false, next: sit}
+  curious:     {frames: 8,  fps: 8,  loop: true}
+  sleepy:      {frames: 6,  fps: 5,  loop: true}
+  love:        {frames: 8,  fps: 6,  loop: true}

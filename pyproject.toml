@@ -1,0 +1,16 @@
+[project]
+name = "coco-desktop-pet"
+version = "0.1.0"
+description = "Coco: an animated desktop cat (and, later, a local AI assistant) for Windows"
+requires-python = ">=3.12,<3.13"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+*.spec
+voice_audition/
+!packaging/coco.spec
+
+# Never committed: the Blender art workspace (big, personal), and Coco's own data
+# lives in %LOCALAPPDATA%\Coco, outside the project.
+art/
+
+# My own notes, kept off GitHub
+BUILD_PROMPT.md

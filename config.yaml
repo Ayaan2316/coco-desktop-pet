@@ -1,0 +1,152 @@
+# Coco tuning knobs. Edit, then use tray -> "Reload config" (or restart Coco).
+# Distances/speeds are in logical pixels (what you see at 100% display scaling);
+# Coco multiplies them by your monitor's scale factor (125% -> x1.25).
+# Any key you delete falls back to the default in coco/core/config.py.
+
+cat: coco                       # which folder in cats/ to load
+owner_name: friend              # what she calls you (or: dashboard > About you)
+
+physics:
+  gravity: 2600                 # px/s^2. Higher = snappier falls
+  air_drag: 0.35                # fraction of sideways speed lost per second in the air
+  wall_bounce: 0.55             # bounciness off screen edges (0..1)
+  ceiling_bounce: 0.3
+  max_throw_speed: 3200         # px/s cap on throws
+  throw_sample_window: 0.08     # s of mouse movement used to measure a throw
+  max_fall_speed: 3500
+
+movement:
+  walk_speed: 48                # px/s at size M (S/L scale automatically). 48 = the paws
+                                #   in walk.png move 8 px/frame at 12 fps: no sliding
+  run_speed: 230                # at size M; tune by eye if her gallop slides
+  stalk_speed: 28               # at size M
+  jump_apex_extra: 45           # jump arc peaks this far above the higher end
+  jump_max_height: 900          # ignores window tops higher above her than this
+  jump_crouch_time: 0.2
+  min_walk_distance: 80
+  max_walk_distance: 650
+
+behaviour:
+  decision_interval: [4, 10]    # s she sits before choosing the next activity
+  fidget_interval: [3, 8]       # s between blinks / tail swishes while sitting
+  weights:                      # relative chance of each activity (0 disables it)
+    sit: 30
+    loaf: 14
+    groom: 8
+    yawn: 4
+    stretch: 4
+    look_around: 8
+    walk: 12
+    run: 3
+    go_home: 5                  # walk back to her bed (then nap)
+    jump_up: 4                  # jump onto the active window's top edge
+    peek: 2                     # hide past a screen edge and peek back in
+    stalk: 3                    # stalk + pounce the mouse cursor
+    sleep: 14                   # only while in her bed
+    hop_out: 18                 # only while in her bed
+    sulk: 3                     # only when ignored for long (see mood:)
+  cooldowns:                    # min seconds between two uses of the same activity
+    run: 45
+    go_home: 120
+    jump_up: 60
+    peek: 240
+    stalk: 240
+    yawn: 30
+    stretch: 30
+    hop_out: 20
+  durations:                    # [min, max] seconds
+    loaf: [10, 30]
+    groom: [4, 9]
+    sleep: [45, 150]
+    purr_max: [20, 20]
+    peek_hide: [3, 8]
+  start_in_bed: true            # she starts the day waking up in her bed
+  drop_off_window_chance: 0.4   # at the end of a window top: hop down (vs turn around)
+  night_start_hour: 23          # night = sleepier
+  night_end_hour: 7
+  night_sleep_mult: 3.0         # sleep/go_home weights x this at night
+  night_move_mult: 0.5          # movement weights x this at night
+  night_sleep_duration_mult: 2.0
+  user_idle_sleepy_after: 600   # s without keyboard/mouse -> as sleepy as at night
+
+petting:                        # slow back-and-forth cursor rubbing over her = petting
+  min_speed: 40
+  max_speed: 1200
+  min_path: 260
+  min_reversals: 2
+  window: 2.0
+  linger: 1.5
+
+cursor_play:
+  reach: 520                    # notices the cursor within this horizontal distance
+  max_height: 260               # ...if it's at most this far above her surface
+  pounce_distance: 170
+  wiggle_time: 0.8
+  give_up_after: 8
+  click_through_time: 0.7       # her window ignores clicks around a pounce
+
+polite:                         # hide during fullscreen games/videos/presentations
+  enabled: true
+  poll_interval: 1.0
+  resume_delay: 2.0
+
+sensors:
+  window_poll_interval: 0.5
+  idle_window_poll_interval: 2.0
+  support_tolerance: 2          # px a window may jitter before she falls off
+
+ui:
+  default_size: M               # S / M / L (tray menu remembers your choice)
+  sizes: {S: 96, M: 128, L: 192}
+  max_fps: 60
+  click_mask: true
+  home_monitor: primary         # or a device name like "\\\\.\\DISPLAY2"
+  show_debug_overlay: false
+  hotkeys:
+    debug_overlay: ctrl+alt+d
+    toggle_visible: ctrl+alt+c  # kill switch: hide/show Coco instantly
+    chat: ctrl+alt+m        # open the chat bubble without clicking her
+
+# ---- AI brain ---------------------------------------------------------------
+brain:                          # local LLM through Ollama (nothing leaves your PC)
+  enabled: true
+  model: qwen3.5:9b             # smarter answers (~6.6 GB VRAM); qwen3.5:4b = faster, simpler
+  host: http://127.0.0.1:11434
+  think: false                  # true = she "thinks" first: smarter, but slower to answer
+  temperature: 0.7
+  num_ctx: 8192                 # context window (tokens)
+  keep_alive: 5m                # unload the model after 5 idle minutes (frees the GPU)
+  history_turns: 6              # how many Q&A pairs she remembers within one chat
+  history_reset_after: 1800     # s without chatting before she forgets the conversation
+  max_reply_chars: 1200
+  request_timeout: 120
+  autostart_ollama: true        # start `ollama serve` in the background if needed
+  prewarm_on_battery: false     # load the model while you type even on battery
+
+mood:                           # how her mood drifts (stats are 0..1; see behaviour/mood.py)
+  boredom_per_min: 0.02         # boredom rises this much per minute without attention
+  energy_awake_minutes: 20      # awake: energy drifts to the time-of-day level
+  energy_sleep_minutes: 10      # napping: energy refills
+  affection_minutes: 60         # affection settles back to her bond-based baseline
+  happiness_minutes: 10
+  pet_affection: 0.08           # what one pet is worth...
+  pet_happiness: 0.06
+  pet_bond: 0.004               # ...and the long-term bond it builds
+  chat_affection: 0.03
+  chat_bond: 0.002
+  play_boredom: 0.25            # chatting / pouncing cures this much boredom
+  thrown_happiness: 0.05        # per 1000 px/s of throw speed
+  bored_at: 0.6
+  tired_at: 0.35
+  sulk_affection: 0.3           # sulks when affection is below this...
+  sulk_after: 2700              # ...and nobody played with her for 45 min
+  save_every: 60                # s between saves of %LOCALAPPDATA%\Coco\mood.json
+
+chat_ui:                        # the speech bubble
+  max_width: 340
+  max_height: 300
+  chars_per_second: 40          # typewriter speed
+  linger_base: 4.0              # bubble stays 4 s + 0.05 s per character after a reply
+  linger_per_char: 0.05
+  unprompted_lines: true        # rare canned lines (late night, welcome back...)
+  line_cooldown: 1200           # s between two unprompted lines
